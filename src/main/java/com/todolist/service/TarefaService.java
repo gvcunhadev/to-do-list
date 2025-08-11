@@ -61,7 +61,10 @@ public class TarefaService {
             }
             return cb.and(predicates.toArray(new Predicate[0]));
         };
-        return tarefaRepository.findAll(spec).stream().map(this::toResponseDTO).toList();
+        return tarefaRepository.findAll(spec)
+                .stream()
+                .map(this::toResponseDTO)
+                .toList();
     }
 
     public TarefaResponseDTO buscarPorId(Long id) {
