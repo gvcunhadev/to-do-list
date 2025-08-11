@@ -1,13 +1,13 @@
-package com.gvcunha;
+package com.todolist;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class GvcunhaApplication {
+public class TodoListApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(GvcunhaApplication.class, args);
+		SpringApplication.run(TodoListApplication.class, args);
 	}
 
 }
