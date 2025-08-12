@@ -4,13 +4,17 @@ import com.todolist.dto.TarefaFiltroDTO;
 import com.todolist.dto.TarefaRequestDTO;
 import com.todolist.dto.TarefaResponseDTO;
 import com.todolist.dto.TarefaStatusUpdateDTO;
+import com.todolist.model.Prioridade;
+import com.todolist.model.StatusTarefa;
 import com.todolist.service.TarefaService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -30,16 +34,28 @@ public class TarefaController {
     public List<TarefaResponseDTO> listar(
             @RequestParam(required = false) String status,
             @RequestParam(required = false) String prioridade,
-            @RequestParam(required = false) String dataVencimento
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataVencimento
     ) {
-        // Conversão dos parâmetros para o DTO de filtro
-        TarefaFiltroDTO filtro = new TarefaFiltroDTO(
-                status != null ? com.todolist.model.StatusTarefa.valueOf(status) : null,
-                prioridade != null ? com.todolist.model.Prioridade.valueOf(prioridade) : null,
-                dataVencimento != null ? java.time.LocalDate.parse(dataVencimento) : null
-        );
+        StatusTarefa statusEnum = null;
+        if (status != null) {
+            try {
+                statusEnum = StatusTarefa.valueOf(status.toUpperCase());
+            } catch (IllegalArgumentException e) {
+                throw new IllegalArgumentException("Status de tarefa inválido: " + status);
+            }
+        }
+        Prioridade prioridadeEnum = null;
+        if (prioridade != null) {
+            try {
+                prioridadeEnum = Prioridade.valueOf(prioridade.toUpperCase());
+            } catch (IllegalArgumentException e) {
+                throw new IllegalArgumentException("Prioridade de tarefa inválida: " + prioridade);
+            }
+        }
+        TarefaFiltroDTO filtro = new TarefaFiltroDTO(statusEnum, prioridadeEnum, dataVencimento);
         return tarefaService.listarTarefas(filtro);
     }
+
 
     @GetMapping("/{id}")
     public TarefaResponseDTO buscarPorId(@PathVariable Long id) {

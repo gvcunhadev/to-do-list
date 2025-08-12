@@ -1,6 +1,7 @@
 package com.todolist.service;
 
 import com.todolist.dto.*;
+import com.todolist.exception.TarefaNaoEncontradaException;
 import com.todolist.model.StatusTarefa;
 import com.todolist.model.Subtarefa;
 import com.todolist.model.Tarefa;
@@ -69,7 +70,7 @@ public class TarefaService {
 
     public TarefaResponseDTO buscarPorId(Long id) {
         Tarefa tarefa = tarefaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Tarefa não encontrada"));
+                .orElseThrow(() -> new TarefaNaoEncontradaException("Tarefa não encontrada"));
         return toResponseDTO(tarefa);
     }
 
@@ -78,13 +79,10 @@ public class TarefaService {
         Tarefa tarefa = tarefaRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Tarefa não encontrada"));
 
-        if (dto.status() == StatusTarefa.CONCLUIDA) {
-            boolean sePendente = tarefa.getSubtarefas().stream()
-                    .anyMatch(s -> s.getStatus() != StatusTarefa.CONCLUIDA);
-            if (sePendente) {
-                throw new IllegalStateException("Não é possível concluir a tarefa com subtarefas pendentes.");
-            }
+        if (dto.status() == StatusTarefa.CONCLUIDA && tarefa.temSubtarefasPendentes()) {
+            throw new IllegalStateException("Não é possível concluir a tarefa com subtarefas pendentes.");
         }
+
         tarefa.setStatus(dto.status());
         tarefaRepository.save(tarefa);
         return toResponseDTO(tarefa);
@@ -93,7 +91,7 @@ public class TarefaService {
     @Transactional
     public void deletarTarefa(Long id) {
         if (!tarefaRepository.existsById(id)) {
-            throw new RuntimeException("Tarefa não encontrada");
+            throw new TarefaNaoEncontradaException("Tarefa não encontrada");
         }
         tarefaRepository.deleteById(id);
     }

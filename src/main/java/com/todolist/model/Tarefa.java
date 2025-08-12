@@ -36,4 +36,9 @@ public class Tarefa {
 
     @OneToMany(mappedBy = "tarefa", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Subtarefa> subtarefas = new ArrayList<>();
+
+    public boolean temSubtarefasPendentes() {
+        return this.subtarefas != null && this.subtarefas.stream()
+                .anyMatch(s -> s.getStatus() != StatusTarefa.CONCLUIDA);
+    }
 }
