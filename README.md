@@ -91,8 +91,20 @@ Para parar a aplicação
 docker-compose down
 ```
 ## 🧪 Testes
-(Em desenvolvimento)
-Serão implementados testes unitários e de integração utilizando JUnit 5 e Spring Boot Test.
+A aplicação possui uma suíte de testes automatizados para garantir a confiabilidade e a estabilidade das funcionalidades. A cultura de testes é uma das boas práticas de desenvolvimento adotadas, permitindo que o projeto cresça de forma sustentável e segura.
 
-👤 Autor
+## Testes Unitários
+
+Testam a lógica de negócio de classes isoladas, como os serviços (Services), com suas dependências sendo "mockadas" (simuladas). O foco é validar o comportamento de cada método.
+
+Ferramentas: JUnit 5 e Mockito.
+
+## Testes de Integração
+
+Validam o fluxo completo da aplicação, desde a requisição HTTP até a persistência no banco de dados. Um banco de dados em memória, como o H2, é usado para garantir que cada teste seja isolado e não interfira em outros.
+
+Ferramentas: JUnit 5, @SpringBootTest e MockMvc.
+
+
+## 👤 Autor
 Gabriela Cunha
