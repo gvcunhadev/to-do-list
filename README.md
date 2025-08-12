@@ -18,6 +18,8 @@ Este projeto foi desenvolvido como parte de um projeto pessoal para afiar meus e
 - Atualizar o status da tarefa
 - Deletar tarefa
 - **Validação:** Impedir conclusão de tarefa com subtarefas pendentes
+- Validação com @Valid e mensagens claras
+- Docker Compose com banco de dados
 - Documentação interativa da API com Swagger
 
 ---
