@@ -1,6 +1,7 @@
 # 📝 To-Do List API
 
-API RESTful desenvolvida com **Java 17** e **Spring Boot** para gerenciamento de tarefas e subtarefas, permitindo criação, listagem, atualização e exclusão, com filtros e validações. O banco H2 foi utilizado com intuito de simplificar o projeto, mas da forma na qual está sendo configurado é plenamente possível a migração para outros DBs.
+API RESTful desenvolvida com **Java 17** e **Spring Boot** para gerenciamento de tarefas e subtarefas, permitindo criação, listagem, atualização e exclusão, com filtros e validações. 
+O banco H2 foi escolhido para simplificar o projeto, mas a arquitetura permite uma migração fluida para qualquer outro banco de dados relacional.
 
 ## 📌 Objetivo
 Este projeto foi desenvolvido como parte de um projeto pessoal para afiar meus estudos em:
@@ -12,16 +13,13 @@ Este projeto foi desenvolvido como parte de um projeto pessoal para afiar meus e
 ---
 
 ## 🚀 Funcionalidades
-
-- Criar tarefa com título, descrição, data de vencimento, status e prioridade
-- Listar tarefas com filtros por status, prioridade e vencimento
-- Atualizar o status da tarefa
-- Deletar tarefa
-- **Validação:** Impedir conclusão de tarefa com subtarefas pendentes
-- Validação com @Valid 
-- Docker Compose com banco de dados
-- Documentação interativa da API com Swagger
-
+- CRUD Completo: Criar, listar, atualizar e deletar tarefas com todos os seus atributos (título, descrição, data de vencimento, status e prioridade).
+- Filtros Dinâmicos: Listagem de tarefas com filtros por status, prioridade e vencimento.
+- Validações:
+   - Impedir a conclusão de tarefas com subtarefas pendentes.
+   - Validação de dados de entrada com @Valid.
+- Docker Compose: Gerenciamento do ambiente de desenvolvimento com um simples comando.
+- Documentação Interativa: Explore e teste a API através do Swagger.
 ---
 
 ## 🛠 Tecnologias Utilizadas
@@ -58,15 +56,20 @@ http://localhost:8080/swagger-ui/index.html
 
 O console do Banco de Dados estará disponível em:
 http://localhost:8080/h2-console
- 
+
+⚙️ Como Executar a Aplicação
+---
+Certifique-se de ter as seguintes ferramentas instaladas em sua máquina:
+
+Docker e Docker Compose
 
 ### 1️⃣ Clonar o repositório
 ```bash
-git clone https://github.com/seu-usuario/seu-repositorio.git
+git clone https://github.com/gvcunhadev/to-do-list.git
 ```
 ## ⚙️ Configure as variáveis de ambiente
 Na raíz do seu projeto, crie uma cópia do arquivo .env.example e renomeie para .env.
-Abra o arquivo .env e preencha com suas credenciais do H2
+Abra o arquivo .env e preencha com suas credenciais do banco de dados.
 
 ```bash
 SPRING_DATASOURCE_URL=jdbc:h2:file:/data/todolistdb
@@ -77,12 +80,6 @@ SPRING_DATASOURCE_PASSWORD=sa
 ## ⚙️ Como Executar a Aplicação
 Está aplicação está preparada para ser executada com Docker. 
 
-## ⚙️ Localmente
-Após clonar o repositório 
-```bash
-cd seu-repositorio
-mvn spring-boot:run
-```
 ## 🐳 Com Docker
 Após clonar o repositório 
 ```bash
