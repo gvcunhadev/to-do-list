@@ -57,6 +57,9 @@ http://localhost:8080/swagger-ui/index.html
 O console do Banco de Dados estará disponível em:
 http://localhost:8080/h2-console
 
+A collections com as requisições via Postman
+https://web.postman.co/workspace/My-Workspace~43894eae-1759-452e-86ec-8dcb185caea6/collection/34377823-28c50f61-2079-4d30-a083-e8caaa91a0b4?action=share&source=copy-link&creator=34377823
+
 ⚙️ Como Executar a Aplicação
 ---
 Certifique-se de ter as seguintes ferramentas instaladas em sua máquina:
