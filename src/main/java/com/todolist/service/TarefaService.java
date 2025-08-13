@@ -12,7 +12,11 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,7 +52,7 @@ public class TarefaService {
         return toResponseDTO(salva);
     }
 
-    public List<TarefaResponseDTO> listarTarefas(TarefaFiltroDTO filtro) {
+    public Page<TarefaResponseDTO> listarTarefas(TarefaFiltroDTO filtro, Pageable pageable) {
         Specification<Tarefa> spec = (root, query, cb) -> {
             List<Predicate> predicates = new ArrayList<>();
             if (filtro.status() != null) {
@@ -58,14 +62,13 @@ public class TarefaService {
                 predicates.add(cb.equal(root.get("prioridade"), filtro.prioridade()));
             }
             if (filtro.dataVencimento() != null) {
-                predicates.add(cb.equal(root.get("dataVencimento"), filtro.dataVencimento()));
+                predicates.add(cb.equal(cb.function("DATE", LocalDate.class, root.get("dataVencimento")), filtro.dataVencimento()));
             }
             return cb.and(predicates.toArray(new Predicate[0]));
         };
-        return tarefaRepository.findAll(spec)
-                .stream()
-                .map(this::toResponseDTO)
-                .toList();
+
+        return tarefaRepository.findAll(spec, pageable)
+                .map(this::toResponseDTO);
     }
 
     public TarefaResponseDTO buscarPorId(Long id) {

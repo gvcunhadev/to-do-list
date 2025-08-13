@@ -9,6 +9,8 @@ import com.todolist.model.StatusTarefa;
 import com.todolist.service.TarefaService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -31,10 +33,12 @@ public class TarefaController {
     }
 
     @GetMapping
-    public List<TarefaResponseDTO> listar(
+    public Page<TarefaResponseDTO> listar(
             @RequestParam(required = false) String status,
             @RequestParam(required = false) String prioridade,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataVencimento
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataVencimento,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
     ) {
         StatusTarefa statusEnum = null;
         if (status != null) {
@@ -53,7 +57,7 @@ public class TarefaController {
             }
         }
         TarefaFiltroDTO filtro = new TarefaFiltroDTO(statusEnum, prioridadeEnum, dataVencimento);
-        return tarefaService.listarTarefas(filtro);
+        return tarefaService.listarTarefas(filtro, PageRequest.of(page, size));
     }
 
 
