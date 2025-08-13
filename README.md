@@ -14,7 +14,7 @@ Este projeto foi desenvolvido como parte de um projeto pessoal para afiar meus e
 
 ## 🚀 Funcionalidades
 - CRUD Completo: Criar, listar, atualizar e deletar tarefas com todos os seus atributos (título, descrição, data de vencimento, status e prioridade).
-- Filtros Dinâmicos: Listagem de tarefas com filtros por status, prioridade e vencimento.
+- Filtros Dinâmicos: Listagem de tarefas com filtros por status, prioridade e vencimento, e paginação.
 - Validações:
    - Impedir a conclusão de tarefas com subtarefas pendentes.
    - Validação de dados de entrada com @Valid.
